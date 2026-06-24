@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop la hermana | Catálogo Inteligente</title>
+    
+    <!-- Identificador de Marca (Favicon) - ¡AGREGADO CORRECTAMENTE! -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+    <style>
+        :root {
+            --primario: #1a365d;
+            --secundario: #e2e8f0;
+            --acento: #d69e2e;
+            --texto: #1e293b; /* Letras generales más oscuras y legibles */
+            --texto-oscuro: #0f172a; /* Negro profundo para títulos y etiquetas */
+            --blanco: #ffffff;
+            --bg-main: #f7fafc;
+            --action-green: #25d366;
+            
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --card-shadow: 0 4px 20px rgba(26, 54, 93, 0.05);
+            --card-shadow-hover: 0 12px 30px rgba(26, 54, 93, 0.12);
+            --transition: cubic-bezier(0.4, 0, 0.2, 1) 0.25s;
+        }
+
+        * { box-sizing: border-box; transition: var(--transition); }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; padding: 0; 
+            background-color: var(--bg-main); 
+            color: var(--texto);
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+        
+        nav.navbar {
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 18px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 26px; font-weight: 600; color: var(--blanco); text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--acento); }
+
+        /* Estilo para el botón Volver al Inicio */
+        .btn-nav-home {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--blanco);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn-nav-home:hover {
+            background: var(--acento);
+            border-color: var(--acento);
+            transform: translateY(-2px);
+        }
+
+        .main-layout { display: flex; flex: 1; max-width: 1300px; width: 100%; margin: 30px auto; padding: 0 20px; gap: 30px; }
+
+        .sidebar-menu { width: 260px; display: flex; flex-direction: column; gap: 8px; align-self: start; }
+
+        @media (max-width: 900px) {
+            nav.navbar { padding: 18px 20px; }
+            .main-layout { flex-direction: column; padding: 15px; margin: 10px auto; gap: 15px; }
+            .sidebar-menu { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+            .sidebar-menu::-webkit-scrollbar { display: none; }
+        }
+
+        .btn-category {
+            background: var(--blanco); border: 1px solid rgba(15, 23, 42, 0.05); color: var(--texto);
+            padding: 12px 18px; border-radius: var(--radius-md); font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px;
+        }
+        .btn-category:hover { background-color: #edf2f7; color: var(--primario); }
+        .btn-category.active { 
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%); color: var(--blanco); 
+            font-weight: 600; border-color: var(--primario); box-shadow: 0 4px 12px rgba(26, 54, 93, 0.2);
+        }
+
+        .content-workspace { flex: 1; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        @media (min-width: 650px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+        @media (min-width: 1050px) { .products-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .product-card { 
+            background: var(--blanco); border-radius: var(--radius-lg); padding: 16px; 
+            box-shadow: var(--card-shadow); border: 1px solid #edf2f7; display: flex; flex-direction: column; justify-content: space-between; 
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: var(--card-shadow-hover); }
+        .product-img-wrapper { position: relative; padding-bottom: 100%; background-color: var(--bg-main); border-radius: var(--radius-md); overflow: hidden; margin-bottom: 14px; }
+        .product-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+        .product-card h3 { font-size: 1rem; margin: 0 0 6px 0; color: var(--texto-oscuro); font-weight: 600; height: 44px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .price { color: var(--acento); font-weight: 700; font-size: 1.2rem; margin: 4px 0 12px 0; }
+        
+        .btn-add { background-color: var(--primario); color: white; border: none; padding: 12px; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .btn-add:hover { background-color: #2c5282; }
+
+        .cart-icon-floating { position: fixed; bottom: 30px; left: 30px; background-color: var(--primario); color: white; width: 56px; height: 56px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; box-shadow: 0 10px 25px rgba(26, 54, 93, 0.3); cursor: pointer; z-index: 1000; }
+        .cart-badge { position: absolute; top: -2px; right: -2px; background-color: #ef4444; color: white; border-radius: 50%; min-width: 22px; height: 22px; padding: 2px 5px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 380px; height: 100%; background: var(--blanco); padding: 30px 24px; box-shadow: -15px 0 40px rgba(0,0,0,0.15); z-index: 2500; overflow-y: auto; display: flex; flex-direction: column; }
+        @media (max-width: 400px) { .cart-sidebar { width: 100%; right: -100%; } }
+        .cart-sidebar.open { right: 0; }
+        .close-cart { font-size: 1.2rem; color: var(--texto-oscuro); cursor: pointer; float: right; background: var(--bg-main); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .cart-sidebar h2 { color: var(--texto-oscuro); font-size: 1.4rem; margin-top: 0; margin-bottom: 20px; font-weight: 700; }
+        .cart-items { list-style: none; padding: 0; margin: 0 0 20px 0; color: var(--texto-oscuro); }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #edf2f7; padding-bottom: 10px; font-weight: 500; }
+        .btn-remove-item { background: none; border: none; color: #ef4444; font-size: 1.3rem; cursor: pointer; }
+        .cart-sidebar h3 { font-size: 1.15rem; color: var(--texto-oscuro); display: flex; justify-content: space-between; background: var(--bg-main); padding: 14px; border-radius: var(--radius-md); margin: 0 0 24px 0; border: 1px solid #edf2f7; }
+        
+        .customer-form { border-top: 1px solid #edf2f7; padding-top: 20px; }
+        .form-group { margin-bottom: 14px; display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.8rem; font-weight: 700; margin-bottom: 6px; color: var(--texto-oscuro); text-transform: uppercase; }
+        .form-group input { padding: 12px; border: 1px solid #cbd5e1; border-radius: var(--radius-md); font-family: inherit; color: var(--texto-oscuro); font-weight: 500; }
+        .form-inline { display: flex; align-items: center; gap: 15px; margin-top: 4px; color: var(--texto-oscuro); font-weight: 600; }
+
+        .payment-info-box { background-color: rgba(37, 211, 102, 0.06); border-left: 4px solid var(--action-green); padding: 14px; border-radius: var(--radius-md); margin-top: 20px; font-size: 0.85rem; color: var(--texto-oscuro); }
+        .btn-pay { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px; margin: 8px 0; border: none; border-radius: var(--radius-md); font-weight: 600; cursor: pointer; color: white; }
+        .enzona { background-color: #2563eb; }
+        .transfermovil { background-color: #dc2626; }
+        
+        .loading { font-size: 0.95rem; grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--texto-oscuro); font-weight: 500; }
+
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; padding: 16px; }
+        .modal-content { background-color: var(--blanco); padding: 24px; border-radius: var(--radius-lg); max-width: 540px; width: 100%; position: relative; display: flex; gap: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .modal-left { flex: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-main); border-radius: var(--radius-md); overflow: hidden; }
+        .modal-left img { max-width: 100%; max-height: 220px; object-fit: cover; }
+        .modal-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .modal-right h2 { margin: 0; font-size: 1.3rem; color: var(--texto-oscuro); }
+        .modal-price { font-size: 1.3rem; color: var(--acento); font-weight: 700; margin: 5px 0; }
+        .modal-desc { font-size: 0.9rem; color: var(--texto); margin-bottom: 15px; }
+        .close-modal { position: absolute; top: 12px; right: 14px; font-size: 1.2rem; cursor: pointer; background: var(--bg-main); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+        @media (max-width: 580px) { .modal-content { flex-direction: column; gap: 16px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Shop <span>la hermana</span></div>
+        <!-- Enlace de regreso a la Home para mejorar la experiencia de usuario -->
+        <a href="index.html" class="btn-nav-home">
+            <i class="fa-solid fa-house"></i> Inicio
+        </a>
+    </nav>
+
+    <div class="main-layout">
+        <aside class="sidebar-menu">
+            <button class="btn-category active" onclick="filterCategory('sala', this)"><i class="fa-solid fa-couch"></i> Sala</button>
+            <button class="btn-category" onclick="filterCategory('baño', this)"><i class="fa-solid fa-bath"></i> Baño</button>
+            <button class="btn-category" onclick="filterCategory('cocina', this)"><i class="fa-solid fa-kitchen-set"></i> Cocina</button>
+            <button class="btn-category" onclick="filterCategory('jardín', this)"><i class="fa-solid fa-seedling"></i> Jardín</button>
+            <button class="btn-category" onclick="filterCategory('terraza', this)"><i class="fa-solid fa-cloud-sun"></i> Terraza</button>
+            <button class="btn-category" onclick="filterCategory('textiles', this)"><i class="fa-solid fa-scroll"></i> Textiles</button>
+            <button class="btn-category" onclick="filterCategory('ropa', this)"><i class="fa-solid fa-shirt"></i> Ropa</button>
+            <button class="btn-category" onclick="filterCategory('juguetes', this)"><i class="fa-solid fa-gamepad"></i> Juguetes</button>
+            <button class="btn-category" onclick="filterCategory('mascotas', this)"><i class="fa-solid fa-paw"></i> Mascotas</button>
+        </aside>
+
+        <main class="content-workspace">
+            <div class="products-grid" id="catalog">
+                <div class="loading" id="loadingMessage"><i class="fa-solid fa-spinner fa-spin"></i> Conectando al inventario de la nube...</div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="cart-icon-floating" onclick="toggleCart()">
+        <i class="fa-solid fa-basket-shopping"></i><span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+    </div>
+
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div><span class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></span><h2>🧾 Tu Lista de Pedido</h2></div>
+        <ul id="cartItems" class="cart-items"><p id="emptyMessage" style="text-align: center; padding: 25px 0;">El carrito está vacío</p></ul>
+        <h3><span>Total:</span> <span>$<span id="cartTotal">0</span> CUP</span></h3>
+
+        <div class="customer-form">
+            <div class="form-group"><label>Nombre Cliente *</label><input type="text" id="custName"></div>
+            <div class="form-group"><label>Teléfono *</label><input type="tel" id="custPhone"></div>
+            <div class="form-group"><label>Dirección Entrega *</label><input type="text" id="custAddress"></div>
+            <div class="form-group"><label>Método</label><div class="form-inline"><label><input type="radio" name="messaging" value="Sí" checked> Envíos</label><label><input type="radio" name="messaging" value="No"> Recogida</label></div></div>
+        </div>
+
+        <div class="payment-info-box"><strong>📌 Canales de Pago:</strong><p>📲 EnZona: <span id="infoMovil"></span></p><p>💳 Tarjeta: <span id="infoTarjeta"></span></p></div>
+        <div class="payment-methods">
+            <button class="btn-pay enzona" onclick="processPayment('EnZona')"><i class="fa-solid fa-cube"></i> Vía EnZona</button>
+            <button class="btn-pay transfermovil" onclick="processPayment('Transfermóvil')"><i class="fa-solid fa-credit-card"></i> Vía Transfermóvil</button>
+            <button class="btn-pay" style="background-color: var(--acento);" onclick="processPayment('Efectivo')"><i class="fa-solid fa-money-bill-wave"></i> En Efectivo</button>
+        </div>
+    </aside>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+            <div class="modal-left"><img id="modalImg" src=""></div>
+            <div class="modal-right"><h2 id="modalTitle"></h2><p id="modalPrice" class="modal-price"></p><p id="modalDesc" class="modal-desc"></p><div id="modalActionBtn"></div></div>
+        </div>
+    </div>
+
+    <script>
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1LosBtgt_kjfnVb0PsmFFhk8vxKLJ9l0gZhekEiYZ2yM/export?format=csv';
+        const WHATSAPP_NUMBER = "5350168277";       
+        const MI_MOVIL_PAGO = "53560235";           
+        const MI_TARJETA_PAGO = "9205123456789012"; 
+
+        let cart = []; let total = 0; let currentCategory = 'sala';
+
+        // Ajustado para coincidir perfectamente con los datos globales
+        const localBackupProducts = [
+            { name: "Forro de Muebles Premium con Faldón", price: 4500, image: "IMG-20260521-WA0032.jpg", description: "Elegante forro protector texturizado en tono marrón habano con faldón plisado clásico. Diseñado con tejidos elásticos de alta resistencia que se adaptan perfectamente a tus sillones.", category: "sala" },
+            { name: "Estante Organizador de Cocina", price: 6800, image: "IMG-20260606-WA0018.jpg", description: "Maximiza el espacio en tu encimera de cocina.", category: "cocina" },
+            { name: "Set de Cuchillos Profesionales", price: 3200, image: "IMG-20260606-WA0019.jpg", description: "Cuchillas de acero inoxidable perfectamente afiladas.", category: "cocina" }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('infoMovil').innerText = MI_MOVIL_PAGO;
+            document.getElementById('infoTarjeta').innerText = MI_TARJETA_PAGO;
+
+            fetch(SHEET_CSV_URL)
+                .then(res => { if(!res.ok) throw new Error(); return res.text(); })
+                .then(data => { renderCSV(data); applyInitialFilter(); })
+                .catch(() => { renderBackup(); applyInitialFilter(); });
+        });
+
+        function renderCSV(text) {
+            const lines = text.split(/\r?\n/);
+            const catalog = document.getElementById('catalog');
+            let count = 0; let html = "";
+
+            for(let i=1; i<lines.length; i++){
+                const row = lines[i].split(',');
+                if(row.length < 3) continue;
+                const name = row[0].replace(/^"|"$/g, '').trim();
+                const price = parseInt(row[1].replace(/[^0-9]/g, '')) || 0;
+                const img = row[2].replace(/^"|"$/g, '').trim();
+                const desc = row[3] ? row[3].replace(/^"|"$/g, '').trim() : "Artículo de calidad.";
+                const cat = row[4] ? row[4].replace(/^"|"$/g, '').trim().toLowerCase() : "variados";
+
+                if(!name) continue;
+                html += `
+                    <div class="product-card" data-category="${cat}">
+                        <div class="product-img-wrapper"><img src="${img}" onclick="openModal('${name.replace(/'/g, "\\'")}',${price},'${img}','${desc.replace(/'/g, "\\'")}')"></div>
+                        <h3>${name}</h3><p class="price">$${price} CUP</p>
+                        <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}',${price})"><i class="fa-solid fa-plus"></i> Añadir</button>
+                    </div>`;
+                count++;
+            }
+            if(count > 0) { document.getElementById('loadingMessage').style.display='none'; catalog.innerHTML=html; }
+            else { renderBackup(); }
+        }
+
+        function renderBackup() {
+            const catalog = document.getElementById('catalog');
+            document.getElementById('loadingMessage').style.display = 'none';
+            let html = "";
+            localBackupProducts.forEach(p => {
+                html += `
+                    <div class="product-card" data-category="${p.category}">
+                        <div class="product-img-wrapper"><img src="${p.image}" onclick="openModal('${p.name}',${p.price},'${p.image}','${p.description}')"></div>
+                        <h3>${p.name}</h3><p class="price">$${p.price} CUP</p>
+                        <button class="btn-add" onclick="addToCart('${p.name}',${p.price})"><i class="fa-solid fa-plus"></i> Añadir</button>
+                    </div>`;
+            });
+            catalog.innerHTML = html;
+        }
+
+        function applyInitialFilter() {
+            document.querySelectorAll('.product-card').forEach(p => {
+                p.style.display = (p.getAttribute('data-category') === currentCategory) ? "flex" : "none";
+            });
+        }
+
+        function filterCategory(cat, btn) {
+            currentCategory = cat.toLowerCase();
+            document.querySelectorAll('.btn-category').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyInitialFilter();
+        }
+
+        function openModal(name, price, img, desc) {
+            document.getElementById('modalImg').src = img; document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalPrice').innerText = `$${price} CUP`; document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalActionBtn').innerHTML = `<button class="btn-add" style="width:100%" onclick="addToCart('${name.replace(/'/g, "\\'")}',${price}); closeModal();">Añadir al Pedido</button>`;
+            document.getElementById('productModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('productModal').style.display = 'none'; }
+        function toggleCart() { document.getElementById('cartSidebar').classList.toggle('open'); }
+
+        function addToCart(name, price) {
+            cart.push({name, price}); total += price;
+            document.getElementById('cartItems').innerHTML = cart.map((item, i) => `<li class="cart-item"><span>${item.name} <b>$${item.price}</b></span><button class="btn-remove-item" onclick="removeItem(${i})">&times;</button></li>`).join('');
+            document.getElementById('cartBadge').innerText = cart.length; document.getElementById('cartBadge').style.display = 'flex';
+            document.getElementById('cartTotal').innerText = total;
+        }
+
+        function removeItem(i) { total -= cart[i].price; cart.splice(i,1); document.getElementById('cartTotal').innerText = total; document.getElementById('cartBadge').innerText = cart.length; if(cart.length===0){ document.getElementById('cartBadge').style.display='none'; document.getElementById('cartItems').innerHTML='<p style="text-align:center;padding:25px 0;">El carrito está vacío</p>';} else { addToCart('',0); cart.pop(); } }
+
+        function processPayment(method) {
+            if(cart.length === 0) return;
+            const n = document.getElementById('custName').value.trim();
+            const p = document.getElementById('custPhone').value.trim();
+            const a = document.getElementById('custAddress').value.trim();
+            if(!n || !p || !a) { alert("Completa los campos obligatorios."); return; }
+
+            let msg = `¡Hola Shop la hermana! 🧾\nSolicito aprobación del pedido:\n`;
+            cart.forEach(i => { msg += `- ${i.name} ($${i.price} CUP)\n`; });
+            msg += `\n💵 Total: $${total} CUP\n💳 Pago: ${method}\n👤 Cliente: ${n}\n📞 Teléf: ${p}\n📍 Dir: ${a}`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+    </script>
+</body>
+</html>

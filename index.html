@@ -1,1 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop la hermana | Bienvenidos</title>
+    
+    <!-- Identificador de Marca (Favicon) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <!-- Fuentes y librerías externas -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+    <style>
+        /* Mapeo de colores corporativos */
+        :root {
+            --primario: #1a365d;
+            --secundario: #e2e8f0;
+            --acento: #d69e2e;
+            --texto: #1e293b;
+            --texto-oscuro: #0f172a;
+            --blanco: #ffffff;
+            --bg-main: #f7fafc;
+            --action-green: #25d366;
+            
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --transition: cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+        }
 
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            transition: var(--transition); 
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--texto);
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Navbar con soporte para botón a la derecha */
+        nav.navbar {
+            background: linear-gradient(135deg, #1a365d 0%, #2a4365 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 18px 50px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+        .logo { font-size: 26px; font-weight: 600; color: var(--blanco); text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--acento); }
+
+        /* Botón de Municipios en Navbar */
+        .btn-nav-municipios {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--blanco);
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-nav-municipios:hover {
+            background: var(--acento);
+            border-color: var(--acento);
+            transform: translateY(-2px);
+        }
+
+        /* HERO PREMIUM - He colocado una imagen de stock elegante de una sala moderna */
+        .hero-section {
+            position: relative;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(26, 54, 93, 0.55)), url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop') no-repeat center center/cover;
+            background-attachment: fixed;
+            height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--blanco);
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 35px auto;
+            color: var(--secundario);
+            font-weight: 300;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--acento) 0%, #b7791f 100%);
+            color: var(--blanco);
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 25px rgba(214, 158, 46, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(214, 158, 46, 0.6);
+        }
+
+        /* Barra de Servicios Flotante */
+        .features-grid {
+            max-width: 1100px;
+            width: calc(100% - 40px);
+            margin: -40px auto 60px auto;
+            background: var(--blanco);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            box-shadow: 0 15px 35px rgba(26, 54, 93, 0.08);
+            z-index: 10;
+            position: relative;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .feature-item:not(:last-child) { border-right: 1px solid var(--secundario); }
+
+        .feature-icon {
+            background: rgba(26, 54, 93, 0.06);
+            color: var(--primario);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .feature-text h3 { font-size: 1rem; color: var(--texto-oscuro); font-weight: 600; margin-bottom: 2px; }
+        .feature-text p { font-size: 0.85rem; color: var(--texto); }
+
+        /* Vitrina de Productos destacados */
+        .showcase-container {
+            max-width: 1250px;
+            width: 100%;
+            margin: 0 auto 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .showcase-container h2 { font-size: 2.2rem; color: var(--texto-oscuro); margin-bottom: 10px; font-weight: 700; }
+        .showcase-container .subtitle { color: var(--texto); margin-bottom: 40px; font-size: 1rem; }
+
+        .grid-showcase {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .showcase-card {
+            background: var(--blanco);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #edf2f7;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(26, 54, 93, 0.12);
+        }
+
+        .img-box {
+            width: 100%;
+            height: 380px;
+            overflow: hidden;
+            background-color: var(--secundario);
+            position: relative;
+        }
+
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .showcase-card:hover .img-box img { transform: scale(1.05); }
+
+        .info-overlay {
+            padding: 20px;
+            text-align: left;
+            background: var(--blanco);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-overlay h3 { font-size: 1.05rem; color: var(--texto-oscuro); font-weight: 600; }
+        .info-overlay .action-tag { color: var(--acento); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Lista de Municipios */
+        .municipios-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 10px 0;
+            list-style: none;
+        }
+        .municipio-tag {
+            background: var(--bg-main);
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            color: var(--texto-oscuro);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 3px solid var(--acento);
+        }
+
+        /* Canales de Contacto */
+        .channels-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--blanco);
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .channels-section h2 { font-size: 2rem; margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
+        .channels-section p { color: var(--secundario); margin-bottom: 40px; font-weight: 300; }
+
+        .channels-wrapper { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+        .channel-btn {
+            padding: 15px 32px; border-radius: var(--radius-md); text-decoration: none; color: var(--blanco);
+            font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 12px;
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .channel-btn.ws-btn:hover { background: var(--action-green); border-color: var(--action-green); transform: translateY(-3px); }
+        .channel-btn.mail-btn:hover { background: #ea4335; border-color: #ea4335; transform: translateY(-3px); }
+        .channel-btn.fb-btn:hover { background: #1877F2; border-color: #1877F2; transform: translateY(-3px); }
+        .channel-btn.ig-btn:hover { background: #E1306C; border-color: #E1306C; transform: translateY(-3px); }
+
+        footer { background: #0f172a; color: #64748b; text-align: center; padding: 25px; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.04); }
+
+        /* Modales */
+        .modal {
+            display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(6px); justify-content: center; align-items: center; padding: 16px;
+        }
+
+        .modal-content {
+            background-color: var(--blanco); padding: 30px; border-radius: var(--radius-lg); max-width: 600px; width: 100%;
+            position: relative; display: flex; gap: 30px; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            animation: modalScale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalScale {
+            from { transform: scale(0.9) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        .modal-left { flex: 1.1; display: flex; align-items: center; justify-content: center; background: var(--bg-main); border-radius: var(--radius-md); overflow: hidden; height: 260px; }
+        .modal-left img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-right { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .modal-right h2 { margin: 0 0 8px 0; font-size: 1.4rem; color: var(--texto-oscuro); font-weight: 700; }
+        .modal-desc { font-size: 0.95rem; color: var(--texto); line-height: 1.6; margin-bottom: 20px; }
+        
+        .close-modal {
+            position: absolute; top: 15px; right: 15px; font-size: 1.2rem; cursor: pointer; background: var(--bg-main);
+            width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--texto-oscuro);
+        }
+        .close-modal:hover { background: var(--secundario); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 950px) {
+            .grid-showcase { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 850px) {
+            nav.navbar { padding: 18px 20px; }
+            .features-grid { grid-template-columns: 1fr; gap: 15px; margin-top: -20px; }
+            .feature-item:not(:last-child) { border-right: none; border-bottom: 1px solid var(--secundario); padding-bottom: 15px; }
+            .grid-showcase { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.3rem; }
+            .modal-content { flex-direction: column; gap: 20px; }
+            .modal-left { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú Superior Corporativo -->
+    <nav class="navbar">
+        <div class="logo">Shop <span>la hermana</span></div>
+        <button class="btn-nav-municipios" onclick="openMunicipiosModal()">
+            <i class="fa-solid fa-map-location-dot"></i> Municipios
+        </button>
+    </nav>
+
+    <!-- Banner Principal con Imagen de Fondo Elegante -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Exclusividad e Innovación</h1>
+            <p>Descubre colecciones premium diseñadas para transformar tus entornos con estilo, orden y total armonía.</p>
+            <a href="productos.html" class="btn-hero">
+                <i class="fa-solid fa-bag-shopping"></i> Explorar Catálogo
+            </a>
+        </div>
+    </header>
+
+    <!-- Módulo Informativo -->
+    <section class="features-grid">
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <div class="feature-text">
+                <h3>Mensajería Rápida</h3>
+                <p>Despachos gestionados al instante.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="feature-text">
+                <h3>Soporte Activo 24/7</h3>
+                <p>Atención continua personalizada.</p>
+            </div>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="feature-text">
+                <h3>Transferencia Directa</h3>
+                <p>Pagos ágiles mediante canales electrónicos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitrina de Productos -->
+    <main class="showcase-container">
+        <h2>Destacados de Temporada</h2>
+        <p class="subtitle">Conoce los detalles de nuestras piezas exclusivas haciendo clic sobre ellas</p>
+        
+        <div class="grid-showcase">
+            <!-- AQUÍ SE ENCUENTRA LA TARJETA DEL FORRO CORREGIDA CON SU IMAGEN -->
+            <div class="showcase-card" onclick="openWelcomeModal('Forro de Muebles Premium con Faldón', 'Elegante forro protector texturizado en tono marrón habano con faldón plisado clásico. Diseñado con tejidos elásticos de alta resistencia que se adaptan perfectamente a tus sillones, aportando calidez, elegancia y un estilo renovado a tu sala.', 'IMG-20260521-WA0032.jpg')">
+                <div class="img-box">
+                    <img src="IMG-20260521-WA0032.jpg" alt="Forro de Muebles Premium con Faldón">
+                </div>
+                <div class="info-overlay">
+                    <h3>Forro de Muebles Premium con Faldón</h3>
+                    <span class="action-tag">Ver Ficha Fina →</span>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="showcase-card" onclick="openWelcomeModal('Estante Organizador de Cocina', 'Organizador de alta gama con soportes de acero inoxidable duraderos. Optimiza al máximo los espacios sobre tu microondas y electrodomésticos manteniendo tus ingredientes ordenados e higiénicos.', 'IMG-20260606-WA0018.jpg')">
+                <div class="img-box">
+                    <img src="IMG-20260606-WA0018.jpg" alt="Estante Organizador de Cocina">
+                </div>
+                <div class="info-overlay">
+                    <h3>Estante Organizador de Cocina</h3>
+                    <span class="action-tag">Ver Ficha Fina →</span>
+                </div>
+            </div>
+            
+            <!-- Producto 3 -->
+            <div class="showcase-card" onclick="openWelcomeModal('Set de Cuchillos Profesionales', 'Juego gastronómico premium de 5 piezas forjadas en acero inoxidable con mangos antideslizantes de textura mate. Incluye potentes tijeras multifunción y una lujosa base de exhibición de acrílico cristalino.', 'IMG-20260606-WA0019.jpg')">
+                <div class="img-box">
+                    <img src="IMG-20260606-WA0019.jpg" alt="Set de Cuchillos Profesionales">
+                </div>
+                <div class="info-overlay">
+                    <h3>Set de Cuchillos Profesionales</h3>
+                    <span class="action-tag">Ver Ficha Fina →</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Panel de Contacto -->
+    <section class="channels-section">
+        <h2>Atención Comercial Directa</h2>
+        <p>¿Tienes dudas o deseas atención a medida? Comunícate por nuestros canales directos.</p>
+        <div class="channels-wrapper">
+            <a href="https://wa.me/5350168277" target="_blank" class="channel-btn ws-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp Business</a>
+            <a href="mailto:tu_correo@gmail.com" class="channel-btn mail-btn"><i class="fa-solid fa-envelope"></i> Correo Electrónico</a>
+            <a href="https://facebook.com/" target="_blank" class="channel-btn fb-btn"><i class="fa-brands fa-facebook-f"></i> Facebook Oficial</a>
+            <a href="https://instagram.com/" target="_blank" class="channel-btn ig-btn"><i class="fa-brands fa-instagram"></i> Instagram Grid</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Shop la hermana. Todos los derechos reservados. Estilo, Orden y Calidad.</p>
+    </footer>
+
+    <!-- MODAL 1: Ventana de Productos Destacados -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeWelcomeModal()"><i class="fa-solid fa-xmark"></i></span>
+            <div class="modal-left">
+                <img id="modalWelcomeImg" src="" alt="">
+            </div>
+            <div class="modal-right">
+                <h2 id="modalWelcomeTitle"></h2>
+                <p id="modalWelcomeDesc" class="modal-desc"></p>
+                <a href="productos.html" class="btn-hero" style="padding: 12px 25px; font-size: 0.9rem; border-radius: var(--radius-md); text-align: center; justify-content: center;">
+                    Ir al Inventario Completo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Ventana de Municipios con Cobertura -->
+    <div id="municipiosModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; flex-direction: column; gap: 15px;">
+            <span class="close-modal" onclick="closeMunicipiosModal()"><i class="fa-solid fa-xmark"></i></span>
+            <h2 style="color: var(--texto-oscuro); font-weight: 700; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-truck-ramp-box" style="color: var(--acento)"></i> Zonas de Entrega
+            </h2>
+            <p style="font-size: 0.9rem; color: var(--texto); margin-bottom: 5px;">Hacemos envíos directos y mensajería rápida a los siguientes municipios:</p>
+            
+            <ul class="municipios-list">
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Ciego de Ávila</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Jicotea</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Majagua</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Venezuela</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Gaspar</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Pina</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Morón</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> 1 Enero</li>
+                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Chamba</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script de Controles -->
+    <script>
+        function openWelcomeModal(title, desc, imgSrc) {
+            document.getElementById('modalWelcomeTitle').innerText = title;
+            document.getElementById('modalWelcomeDesc').innerText = desc;
+            document.getElementById('modalWelcomeImg').src = imgSrc;
+            document.getElementById('welcomeModal').style.display = 'flex';
+        }
+
+        function closeWelcomeModal() { document.getElementById('welcomeModal').style.display = 'none'; }
+
+        function openMunicipiosModal() { document.getElementById('municipiosModal').style.display = 'flex'; }
+        
+        function closeMunicipiosModal() { document.getElementById('municipiosModal').style.display = 'none'; }
+
+        // Cierra los modales automáticamente si se hace clic fuera
+        window.onclick = function(event) {
+            const welcomeModal = document.getElementById('welcomeModal');
+            const municipiosModal = document.getElementById('municipiosModal');
+            if (event.target === welcomeModal) welcomeModal.style.display = "none";
+            if (event.target === municipiosModal) municipiosModal.style.display = "none";
+        }
+    </script>
+</body>
+</html>
