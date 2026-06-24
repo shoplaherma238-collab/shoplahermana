@@ -75,13 +75,13 @@
             align-items: center;
             gap: 8px;
         }
-        .btn-nav-municipios:hover {
+        .btn-nav-municipios:hover, .btn-nav-municipios.seleccionado {
             background: var(--acento);
             border-color: var(--acento);
             transform: translateY(-2px);
         }
 
-        /* HERO PREMIUM - He colocado una imagen de stock elegante de una sala moderna */
+        /* HERO PREMIUM */
         .hero-section {
             position: relative;
             background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(26, 54, 93, 0.55)), url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200&auto=format&fit=crop') no-repeat center center/cover;
@@ -240,7 +240,7 @@
         .info-overlay h3 { font-size: 1.05rem; color: var(--texto-oscuro); font-weight: 600; }
         .info-overlay .action-tag { color: var(--acento); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* Lista de Municipios */
+        /* Lista de Municipios (Modificada para ser interactiva) */
         .municipios-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -258,6 +258,16 @@
             align-items: center;
             gap: 10px;
             border-left: 3px solid var(--acento);
+            border-top: none; border-right: none; border-bottom: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+        .municipio-tag:hover {
+            background: var(--secundario);
+            transform: translateX(4px);
         }
 
         /* Canales de Contacto */
@@ -339,12 +349,12 @@
     <!-- Menú Superior Corporativo -->
     <nav class="navbar">
         <div class="logo">Shop <span>la hermana</span></div>
-        <button class="btn-nav-municipios" onclick="openMunicipiosModal()">
-            <i class="fa-solid fa-map-location-dot"></i> Municipios
+        <button id="btnMunicipiosNav" class="btn-nav-municipios" onclick="openMunicipiosModal()">
+            <i class="fa-solid fa-map-location-dot"></i> <span id="textMunicipioNav">Municipios</span>
         </button>
     </nav>
 
-    <!-- Banner Principal con Imagen de Fondo Elegante -->
+    <!-- Banner Principal -->
     <header class="hero-section">
         <div class="hero-content">
             <h1>Exclusividad e Innovación</h1>
@@ -386,7 +396,7 @@
         <p class="subtitle">Conoce los detalles de nuestras piezas exclusivas haciendo clic sobre ellas</p>
         
         <div class="grid-showcase">
-            <!-- AQUÍ SE ENCUENTRA LA TARJETA DEL FORRO CORREGIDA CON SU IMAGEN -->
+            <!-- Tarjeta 1 -->
             <div class="showcase-card" onclick="openWelcomeModal('Forro de Muebles Premium con Faldón', 'Elegante forro protector texturizado en tono marrón habano con faldón plisado clásico. Diseñado con tejidos elásticos de alta resistencia que se adaptan perfectamente a tus sillones, aportando calidez, elegancia y un estilo renovado a tu sala.', 'IMG-20260521-WA0032.jpg')">
                 <div class="img-box">
                     <img src="IMG-20260521-WA0032.jpg" alt="Forro de Muebles Premium con Faldón">
@@ -461,24 +471,50 @@
             <h2 style="color: var(--texto-oscuro); font-weight: 700; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
                 <i class="fa-solid fa-truck-ramp-box" style="color: var(--acento)"></i> Zonas de Entrega
             </h2>
-            <p style="font-size: 0.9rem; color: var(--texto); margin-bottom: 5px;">Hacemos envíos directos y mensajería rápida a los siguientes municipios:</p>
+            <p style="font-size: 0.9rem; color: var(--texto); margin-bottom: 5px;">Selecciona tu municipio para personalizar tu pedido:</p>
             
-            <ul class="municipios-list">
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Ciego de Ávila</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Jicotea</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Majagua</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Venezuela</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Gaspar</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Pina</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Morón</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> 1 Enero</li>
-                <li class="municipio-tag"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Chamba</li>
-            </ul>
+            <div class="municipios-list">
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Ciego de Ávila')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Ciego de Ávila</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Jicotea')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Jicotea</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Majagua')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Majagua</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Venezuela')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Venezuela</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Gaspar')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Gaspar</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Pina')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Pina</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Morón')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Morón</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('1 Enero')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> 1 Enero</button>
+                <button class="municipio-tag" onclick="seleccionarMunicipio('Chamba')"><i class="fa-solid fa-location-dot" style="color:var(--primario)"></i> Chamba</button>
+            </div>
         </div>
     </div>
 
     <!-- Script de Controles -->
     <script>
+        // Función para ejecutar al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            const municipioGuardado = localStorage.getItem('municipioSeleccionado');
+            if (municipioGuardado) {
+                actualizarInterfazMunicipio(municipioGuardado);
+            }
+        });
+
+        // Al tocar un municipio en la lista
+        function seleccionarMunicipio(nombreMunicipio) {
+            // Guardar en caché local del navegador
+            localStorage.setItem('municipioSeleccionado', nombreMunicipio);
+            
+            // Actualizar diseño del botón en Navbar
+            actualizarInterfazMunicipio(nombreMunicipio);
+            
+            // Cerrar el modal
+            closeMunicipiosModal();
+        }
+
+        // Modifica visualmente el botón superior
+        function actualizarInterfazMunicipio(nombre) {
+            document.getElementById('textMunicipioNav').innerText = "Municipio: " + nombre;
+            document.getElementById('btnMunicipiosNav').classList.add('seleccionado');
+        }
+
         function openWelcomeModal(title, desc, imgSrc) {
             document.getElementById('modalWelcomeTitle').innerText = title;
             document.getElementById('modalWelcomeDesc').innerText = desc;
